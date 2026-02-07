@@ -67,12 +67,12 @@
                                         </span>
                                     @elseif($pesanan->status_pesanan == 'pending')
                                         <span
-                                            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+                                            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-500">
                                             Pending
                                         </span>
                                     @elseif($pesanan->status_pesanan == 'diproses')
                                         <span
-                                            class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:text-white dark:bg-blue-600">
+                                            class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">
                                             Diproses
                                         </span>
                                     @else

@@ -8,36 +8,44 @@
 
         <!-- Filter -->
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{ route('laporan.index') }}" method="GET" class="flex flex-wrap gap-4 items-end">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Dari Tanggal</span>
-                    <input type="date" name="start_date" value="{{ $startDate }}"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" />
-                </label>
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Sampai Tanggal</span>
-                    <input type="date" name="end_date" value="{{ $endDate }}"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" />
-                </label>
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Status</span>
-                    <select name="status"
-                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select">
-                        <option value="">Semua Status</option>
-                        <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                        <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="batal" {{ $status == 'batal' ? 'selected' : '' }}>Batal</option>
-                    </select>
-                </label>
-                <button type="submit"
-                    class="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700">Filter</button>
+            <form action="{{ route('laporan.index') }}" method="GET" class="flex flex-col md:flex-row md:items-end gap-4">
+                <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto flex-1">
+                    <label class="block text-sm flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">Dari Tanggal</span>
+                        <input type="date" name="start_date" value="{{ $startDate }}"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
+                    </label>
+                    <label class="block text-sm flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">Sampai Tanggal</span>
+                        <input type="date" name="end_date" value="{{ $endDate }}"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
+                    </label>
+                    <label class="block text-sm flex-1">
+                        <span class="text-gray-700 dark:text-gray-400">Status</span>
+                        <select name="status"
+                            class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            <option value="">Semua Status</option>
+                            <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="batal" {{ $status == 'batal' ? 'selected' : '' }}>Batal</option>
+                        </select>
+                    </label>
+                </div>
 
-                @if(count($laporans) > 0)
-                    <a href="{{ route('laporan.cetak', ['start_date' => $startDate, 'end_date' => $endDate, 'status' => $status]) }}"
-                        target="_blank"
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Cetak
-                        Laporan</a>
-                @endif
+                <div class="flex gap-2">
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Filter
+                    </button>
+
+                    @if(count($laporans) > 0)
+                        <a href="{{ route('laporan.cetak', ['start_date' => $startDate, 'end_date' => $endDate, 'status' => $status]) }}"
+                            target="_blank"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none focus:shadow-outline-gray">
+                            Cetak Laporan
+                        </a>
+                    @endif
+                </div>
             </form>
         </div>
 
@@ -91,9 +99,18 @@
                                     @if($laporan->status_pesanan == 'selesai')
                                         <span
                                             class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">Selesai</span>
+                                    @elseif($laporan->status_pesanan == 'pending')
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-500">Pending</span>
+                                    @elseif($laporan->status_pesanan == 'diproses')
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">Diproses</span>
+                                    @elseif($laporan->status_pesanan == 'batal')
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">Batal</span>
                                     @else
                                         <span
-                                            class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full">{{ ucfirst($laporan->status_pesanan) }}</span>
+                                            class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-white dark:bg-gray-600">{{ ucfirst($laporan->status_pesanan) }}</span>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-sm">

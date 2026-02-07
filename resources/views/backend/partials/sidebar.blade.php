@@ -1,12 +1,12 @@
 <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
-  <div class="py-4 text-gray-500 dark:text-gray-400">
+  <div class="py-4 text-gray-500 dark:text-gray-200">
     <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="{{ url('admin/dashboard') }}">
       Showroom
     </a>
     <ul class="mt-6">
       <!-- Dashboard -->
       <li class="relative px-2 py-1">
-        <a class="inline-flex items-center w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg {{ request()->is('admin/dashboard') ? 'text-white bg-purple-600 shadow-md' : 'text-gray-800 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-200' }}"
+        <a class="inline-flex items-center w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg {{ request()->is('admin/dashboard') ? 'text-white bg-purple-600 shadow-md' : 'text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-800 dark:hover:text-gray-200' }}"
           href="{{ url('admin/dashboard') }}">
           <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
             stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -24,7 +24,7 @@
       <li class="relative px-2 py-1"
         x-data="{ isMasterMenuOpen: {{ request()->is('admin/merek*', 'admin/tipe*', 'admin/mobil*', 'admin/promo*') ? 'true' : 'false' }} }">
         <button
-          class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200 {{ request()->is('admin/merek*', 'admin/tipe*', 'admin/mobil*', 'admin/promo*') ? 'text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800' : 'text-gray-800 dark:text-gray-400' }}"
+          class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200 {{ request()->is('admin/merek*', 'admin/tipe*', 'admin/mobil*', 'admin/promo*') ? 'text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800' : 'text-gray-800 dark:text-gray-200' }}"
           @click="isMasterMenuOpen = !isMasterMenuOpen" aria-haspopup="true">
           <span class="inline-flex items-center">
             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -46,7 +46,7 @@
           <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0"
             x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300"
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-400"
+            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-200"
             aria-label="submenu">
             <li
               class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -72,7 +72,7 @@
       <li class="relative px-2 py-1"
         x-data="{ isTransaksiMenuOpen: {{ request()->is('admin/pesanan*', 'admin/laporan*') ? 'true' : 'false' }} }">
         <button
-          class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200 {{ request()->is('admin/pesanan*', 'admin/laporan*') ? 'text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800' : 'text-gray-800 dark:text-gray-400' }}"
+          class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200 {{ request()->is('admin/pesanan*', 'admin/laporan*') ? 'text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800' : 'text-gray-800 dark:text-gray-200' }}"
           @click="isTransaksiMenuOpen = !isTransaksiMenuOpen" aria-haspopup="true">
           <span class="inline-flex items-center">
             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -94,7 +94,7 @@
           <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0"
             x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300"
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-400"
+            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-200"
             aria-label="submenu">
             <li
               class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -112,7 +112,7 @@
       <li class="relative px-2 py-1"
         x-data="{ isPenggunaMenuOpen: {{ request()->is('admin/customer*', 'admin/admin*') ? 'true' : 'false' }} }">
         <button
-          class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200 {{ request()->is('admin/customer*', 'admin/admin*') ? 'text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800' : 'text-gray-800 dark:text-gray-400' }}"
+          class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-semibold transition-colors duration-150 rounded-lg hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200 {{ request()->is('admin/customer*', 'admin/admin*') ? 'text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800' : 'text-gray-800 dark:text-gray-200' }}"
           @click="isPenggunaMenuOpen = !isPenggunaMenuOpen" aria-haspopup="true">
           <span class="inline-flex items-center">
             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -134,7 +134,7 @@
           <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0"
             x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300"
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
-            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-400"
+            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-200"
             aria-label="submenu">
             <li
               class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">

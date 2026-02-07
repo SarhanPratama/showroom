@@ -8,20 +8,23 @@
                 @csrf
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nama Lengkap</span>
-                    <input name="nama" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input"
-                        required />
+                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400
+                    focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray
+                    form-input"
+                    required />
                 </label>
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Email</span>
                     <input type="email" name="email" autocomplete="off"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" required />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
+                        required />
                 </label>
                 <div class="mt-4" x-data="{ show: false }">
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Password</span>
                         <div class="relative">
                             <input :type="show ? 'text' : 'password'" name="password" autocomplete="new-password"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input pr-10"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input pr-10"
                                 required />
                             <button type="button" @click="show = !show"
                                 class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">

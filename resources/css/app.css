@@ -91,3 +91,9 @@
             background-color: white;
             transform: scale(1.2);
         }
+
+        /* Dark Mode Calendar Picker Fix */
+        .dark ::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }

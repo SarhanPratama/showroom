@@ -14,7 +14,7 @@
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nama Mobil</span>
                     <input name="nama_mobil"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         placeholder="Contoh: Toyota Avanza" required />
                 </label>
 
@@ -22,7 +22,7 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Harga (Rp)</span>
                     <input type="number" name="harga"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         placeholder="Contoh: 250000000" required />
                 </label>
 
@@ -31,7 +31,7 @@
                     <label class="block w-1/2 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Merek</span>
                         <select name="merek_id"
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             required>
                             <option value="">Pilih Merek</option>
                             @foreach($mereks as $merek)
@@ -44,7 +44,7 @@
                     <label class="block w-1/2 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Tipe Mobil</span>
                         <select name="tipe_id"
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             required>
                             <option value="">Pilih Tipe</option>
                             @foreach($tipes as $tipe)
@@ -58,7 +58,7 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Stok Awal</span>
                     <input type="number" name="stok"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         value="1" min="0" required />
                 </label>
 
@@ -66,7 +66,7 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Deskripsi</span>
                     <textarea name="deskripsi"
-                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                        class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                         rows="3" placeholder="Deskripsi singkat mobil..."></textarea>
                 </label>
 

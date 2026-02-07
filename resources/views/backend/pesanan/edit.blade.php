@@ -9,7 +9,7 @@
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <!-- Info Pesanan -->
             <div class="mb-6">
-                <h4 class="mb-2 text-lg font-semibold text-gray-600 dark:text-gray-300">Detail Pesanan</h4>
+                <h4 class="mb-2 text-lg font-semibold text-gray-600 dark:text-gray-200">Detail Pesanan</h4>
                 <div class="p-4 bg-gray-50 rounded-lg dark:bg-gray-700">
                     <p class="text-sm text-gray-600 dark:text-gray-400"><span class="font-bold">Customer:</span>
                         {{ $pesanan->customer->nama }} ({{ $pesanan->customer->no_hp }})</p>
@@ -44,7 +44,7 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Status Pesanan</span>
                     <select name="status_pesanan"
-                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                         <option value="pending" {{ $pesanan->status_pesanan == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="diproses" {{ $pesanan->status_pesanan == 'diproses' ? 'selected' : '' }}>Diproses
                         </option>

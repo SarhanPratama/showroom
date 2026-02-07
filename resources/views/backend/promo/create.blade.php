@@ -9,22 +9,26 @@
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nama Promo</span>
                     <input name="nama_promo"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" required />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
+                        required />
                 </label>
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Diskon (%)</span>
                     <input type="number" name="diskon" min="0" max="100"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" required />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
+                        required />
                 </label>
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Tanggal Mulai</span>
                     <input type="date" name="tanggal_mulai"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" required />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
+                        required />
                 </label>
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Tanggal Selesai</span>
                     <input type="date" name="tanggal_selesai"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" required />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
+                        required />
                 </label>
 
                 <div class="flex mt-6 text-sm">

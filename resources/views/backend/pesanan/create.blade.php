@@ -14,7 +14,7 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Pilih Customer</span>
                     <select name="customer_id" required
-                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                         <option value="">-- Pilih Customer --</option>
                         @foreach($customers as $customer)
                             <option value="{{ $customer->id }}">{{ $customer->nama }} ({{ $customer->no_hp }})</option>
@@ -28,7 +28,7 @@
 
                 <!-- Dynamic Items with Alpine.js -->
                 <div class="mt-6" x-data="orderItems()">
-                    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Daftar Mobil</h4>
+                    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-200">Daftar Mobil</h4>
 
                     <div class="space-y-4">
                         <template x-for="(item, index) in items" :key="index">
@@ -37,7 +37,7 @@
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Pilih Mobil</span>
                                         <select :name="'items['+index+'][mobil_id]'" x-model="item.mobil_id" required
-                                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                            class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                             <option value="">-- Pilih Mobil --</option>
                                             @foreach($mobils as $mobil)
                                                 <option value="{{ $mobil->id }}">
@@ -52,7 +52,7 @@
                                         <span class="text-gray-700 dark:text-gray-400">Jumlah</span>
                                         <input type="number" :name="'items['+index+'][jumlah]'" x-model="item.jumlah"
                                             min="1" required
-                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray">
+                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray">
                                     </label>
                                 </div>
                                 <div class="flex-shrink-0" x-show="items.length > 1">
@@ -91,14 +91,14 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Tanggal Pesanan</span>
                     <input type="date" name="tanggal_pesan" value="{{ date('Y-m-d') }}" required
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray">
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray">
                 </label>
 
                 <!-- Status -->
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Status Awal</span>
                     <select name="status_pesanan" required
-                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                         <option value="pending">Pending</option>
                         <option value="diproses">Diproses</option>
                         <option value="selesai">Selesai (Langsung Bayar)</option>

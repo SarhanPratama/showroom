@@ -39,11 +39,11 @@
 
           <form action="{{ route('admin.dashboard') }}" method="GET" class="p-4">
             <div class="mb-4">
-              <label class="block mb-2 text-xs font-bold text-gray-700 dark:text-gray-300 uppercase">
+              <label class="block mb-2 text-xs font-bold text-gray-700 dark:text-gray-200 uppercase">
                 Bulan
               </label>
               <select name="month"
-                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md">
+                class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md">
                 <option value="">Semua Bulan</option>
                 @foreach(range(1, 12) as $m)
                   <option value="{{ $m }}" {{ $filterMonth == $m ? 'selected' : '' }}>
@@ -54,11 +54,11 @@
             </div>
 
             <div class="mb-4">
-              <label class="block mb-2 text-xs font-bold text-gray-700 dark:text-gray-300 uppercase">
+              <label class="block mb-2 text-xs font-bold text-gray-700 dark:text-gray-200 uppercase">
                 Tahun
               </label>
               <select name="year"
-                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md">
+                class="block w-full mt-1 text-sm dark:text-gray-200 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md">
                 @foreach(range(date('Y'), 2020) as $y)
                   <option value="{{ $y }}" {{ $filterYear == $y ? 'selected' : '' }}>{{ $y }}</option>
                 @endforeach
@@ -150,14 +150,14 @@
     <div class="grid gap-6 mb-8 md:grid-cols-2">
       <!-- Sales Chart -->
       <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-200">
           Trend Pendapatan
         </h4>
         <canvas id="salesChart"></canvas>
       </div>
       <!-- Status Chart -->
       <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-200">
           Distribusi Status Pesanan
         </h4>
         <canvas id="statusChart"></canvas>
@@ -168,14 +168,14 @@
     <div class="grid gap-6 mb-8 md:grid-cols-2">
       <!-- Top Models Chart -->
       <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-200">
           5 Mobil Terlaris
         </h4>
         <canvas id="topModelsChart"></canvas>
       </div>
       <!-- Customer Growth Chart -->
       <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-200">
           Pertumbuhan Customer Baru
         </h4>
         <canvas id="customerGrowthChart"></canvas>
@@ -230,10 +230,10 @@
                       class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">Selesai</span>
                   @elseif($pesanan->status_pesanan == 'pending')
                     <span
-                      class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">Pending</span>
+                      class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-500">Pending</span>
                   @elseif($pesanan->status_pesanan == 'diproses')
                     <span
-                      class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:text-white dark:bg-blue-600">Diproses</span>
+                      class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">Diproses</span>
                   @else
                     <span
                       class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">Batal</span>

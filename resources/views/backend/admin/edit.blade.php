@@ -14,21 +14,21 @@
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nama Lengkap</span>
                     <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         placeholder="Nama Admin" name="nama" type="text" value="{{ old('nama', $admin->nama) }}" required />
                 </label>
 
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Email</span>
                     <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         placeholder="admin@example.com" name="email" type="email" value="{{ old('email', $admin->email) }}"
                         required />
                 </label>
 
                 <!-- Password Change Section -->
                 <div class="mt-4">
-                    <h4 class="mb-2 text-lg font-semibold text-gray-600 dark:text-gray-300">Ganti Password (Opsional)</h4>
+                    <h4 class="mb-2 text-lg font-semibold text-gray-600 dark:text-gray-200">Ganti Password (Opsional)</h4>
                     <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">Kosongkan jika tidak ingin mengganti password.
                     </p>
 
@@ -39,7 +39,7 @@
                             <div class="relative">
                                 <input :type="show ? 'text' : 'password'" name="current_password"
                                     autocomplete="new-password"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input pr-10"
                                     placeholder="Masukkan password saat ini" />
                                 <button type="button" @click="show = !show"
                                     class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
@@ -68,7 +68,7 @@
                             <span class="text-gray-700 dark:text-gray-400">Password Baru</span>
                             <div class="relative">
                                 <input :type="show ? 'text' : 'password'" name="password" autocomplete="new-password"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input pr-10"
                                     placeholder="Minimal 8 karakter" />
                                 <button type="button" @click="show = !show"
                                     class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
@@ -98,7 +98,7 @@
                             <div class="relative">
                                 <input :type="show ? 'text' : 'password'" name="password_confirmation"
                                     autocomplete="new-password"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input pr-10"
                                     placeholder="Ulangi password baru" />
                                 <button type="button" @click="show = !show"
                                     class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
@@ -136,7 +136,7 @@
                     @endif
 
                     <input type="file" name="foto_profile" accept="image/*"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
                     <span class="text-xs text-gray-500 dark:text-gray-400">Format: JPG, PNG, GIF. Maks: 2MB.</span>
                 </label>
 
