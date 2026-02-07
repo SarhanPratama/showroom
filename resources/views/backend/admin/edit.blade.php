@@ -7,7 +7,7 @@
         </h2>
 
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{ route('admin.update', $admin->id) }}" method="POST">
+            <form action="{{ route('admin.update', $admin->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -26,33 +26,119 @@
                         required />
                 </label>
 
-                <div class="mt-4" x-data="{ show: false }">
-                    <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Password (Kosongkan jika tidak ingin
-                            mengganti)</span>
-                        <div class="relative">
-                            <input :type="show ? 'text' : 'password'" name="password"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
-                                placeholder="Minimal 8 karakter" />
-                            <button type="button" @click="show = !show"
-                                class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
-                                <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                    </path>
-                                </svg>
-                                <svg x-show="show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    style="display: none;">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                    </label>
+                <!-- Password Change Section -->
+                <div class="mt-4">
+                    <h4 class="mb-2 text-lg font-semibold text-gray-600 dark:text-gray-300">Ganti Password (Opsional)</h4>
+                    <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">Kosongkan jika tidak ingin mengganti password.
+                    </p>
+
+                    <!-- Current Password -->
+                    <div class="mt-4" x-data="{ show: false }">
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Password Lama</span>
+                            <div class="relative">
+                                <input :type="show ? 'text' : 'password'" name="current_password"
+                                    autocomplete="new-password"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                    placeholder="Masukkan password saat ini" />
+                                <button type="button" @click="show = !show"
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
+                                    <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
+                                    </svg>
+                                    <svg x-show="show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        style="display: none;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- New Password -->
+                    <div class="mt-4" x-data="{ show: false }">
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Password Baru</span>
+                            <div class="relative">
+                                <input :type="show ? 'text' : 'password'" name="password" autocomplete="new-password"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                    placeholder="Minimal 8 karakter" />
+                                <button type="button" @click="show = !show"
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
+                                    <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
+                                    </svg>
+                                    <svg x-show="show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        style="display: none;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Confirm New Password -->
+                    <div class="mt-4" x-data="{ show: false }">
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Konfirmasi Password Baru</span>
+                            <div class="relative">
+                                <input :type="show ? 'text' : 'password'" name="password_confirmation"
+                                    autocomplete="new-password"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                    placeholder="Ulangi password baru" />
+                                <button type="button" @click="show = !show"
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
+                                    <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
+                                    </svg>
+                                    <svg x-show="show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        style="display: none;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                    </div>
                 </div>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Foto Profile</span>
+
+                    @if($admin->foto_profile)
+                        <div class="mt-2 mb-4">
+                            <div class="w-24 h-24">
+                                <img src="{{ asset('storage/' . $admin->foto_profile) }}" alt="Foto Profile"
+                                    class="w-full h-full rounded-full object-cover border-2 border-purple-500"
+                                    style="width: 96px; height: 96px;">
+                            </div>
+                        </div>
+                    @endif
+
+                    <input type="file" name="foto_profile" accept="image/*"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                    <span class="text-xs text-gray-500 dark:text-gray-400">Format: JPG, PNG, GIF. Maks: 2MB.</span>
+                </label>
 
                 <div class="flex mt-6 text-sm">
                     <button type="submit"

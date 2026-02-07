@@ -13,7 +13,7 @@ class LaporanController extends Controller
         $endDate = $request->input('end_date');
         $status = $request->input('status');
 
-        $query = Pesanan::with(['customer', 'mobil'])->latest();
+        $query = Pesanan::with(['customer', 'mobil', 'details.mobil'])->latest();
 
         if ($startDate && $endDate) {
             $query->whereBetween('tanggal_pesan', [$startDate, $endDate]);
@@ -35,7 +35,7 @@ class LaporanController extends Controller
         $endDate = $request->input('end_date');
         $status = $request->input('status');
 
-        $query = Pesanan::with(['customer', 'mobil'])->latest();
+        $query = Pesanan::with(['customer', 'mobil', 'details.mobil'])->latest();
 
         if ($startDate && $endDate) {
             $query->whereBetween('tanggal_pesan', [$startDate, $endDate]);

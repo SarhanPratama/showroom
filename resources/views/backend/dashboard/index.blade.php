@@ -125,7 +125,8 @@
           <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Pendapatan
             ({{ $filterMonth ? date('M', mktime(0, 0, 0, $filterMonth, 1)) : 'All' }})</p>
           <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">Rp
-            {{ number_format($pendapatan, 0, ',', '.') }}</p>
+            {{ number_format($pendapatan, 0, ',', '.') }}
+          </p>
         </div>
       </div>
       <!-- Card 4 -->
@@ -207,7 +208,22 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-4 py-3 text-sm">{{ $pesanan->mobil->nama_mobil }}</td>
+                <td class="px-4 py-3 text-sm">
+                  @if($pesanan->details->count() > 0)
+                    <ul class="list-disc list-inside text-xs">
+                      @foreach($pesanan->details->take(2) as $detail)
+                        <li>{{ $detail->mobil ? $detail->mobil->nama_mobil : 'Mobil dihapus' }}</li>
+                      @endforeach
+                      @if($pesanan->details->count() > 2)
+                        <li class="italic text-gray-500">+{{ $pesanan->details->count() - 2 }} lainnya</li>
+                      @endif
+                    </ul>
+                  @elseif($pesanan->mobil)
+                    {{ $pesanan->mobil->nama_mobil }}
+                  @else
+                    <span class="text-red-500 italic text-xs">Data mobil tidak ditemukan</span>
+                  @endif
+                </td>
                 <td class="px-4 py-3 text-xs">
                   @if($pesanan->status_pesanan == 'selesai')
                     <span

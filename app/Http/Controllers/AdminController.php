@@ -50,14 +50,33 @@ class AdminController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admins,email,' . $id,
-            'password' => 'nullable|string|min:8',
+            'current_password' => 'nullable|required_with:password|string',
+            'password' => 'nullable|string|min:8|confirmed',
+            'foto_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $admin->nama = $request->nama;
         $admin->email = $request->email;
+
+        // Check if password change is requested
         if ($request->filled('password')) {
+            // Verify current password
+            if (!Hash::check($request->current_password, $admin->password)) {
+                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+            }
             $admin->password = Hash::make($request->password);
         }
+
+        if ($request->hasFile('foto_profile')) {
+            // Delete old image if exists
+            if ($admin->foto_profile) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($admin->foto_profile);
+            }
+            // Store new image
+            $path = $request->file('foto_profile')->store('admins', 'public');
+            $admin->foto_profile = $path;
+        }
+
         $admin->save();
 
         return redirect()->back()->with('success', 'Profile berhasil diperbarui');

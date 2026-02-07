@@ -44,7 +44,8 @@
         <!-- Summary -->
         <div class="mb-4">
             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">Total Pendapatan (Selesai): Rp
-                {{ number_format($totalPendapatan, 0, ',', '.') }}</p>
+                {{ number_format($totalPendapatan, 0, ',', '.') }}
+            </p>
         </div>
 
         <!-- Table -->
@@ -71,7 +72,20 @@
                                     {{ $laporan->customer->nama }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $laporan->mobil->nama_mobil }}
+                                    @if($laporan->details->count() > 0)
+                                        <ul class="list-disc list-inside">
+                                            @foreach($laporan->details as $detail)
+                                                <li>
+                                                    {{ $detail->mobil ? $detail->mobil->nama_mobil : 'Mobil dihapus' }}
+                                                    <span class="text-xs text-gray-500">({{ $detail->jumlah }}x)</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @elseif($laporan->mobil)
+                                        {{ $laporan->mobil->nama_mobil }}
+                                    @else
+                                        <span class="text-red-500 italic">Data mobil tidak ditemukan</span>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     @if($laporan->status_pesanan == 'selesai')

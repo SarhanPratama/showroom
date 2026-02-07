@@ -33,7 +33,7 @@ class DashboardController extends Controller
         $pesananBaru = (clone $queryPesanan)->where('status_pesanan', 'pending')->count();
         $pendapatan = (clone $queryPesanan)->where('status_pesanan', 'selesai')->sum('total_harga');
 
-        $pesananTerbaru = Pesanan::with(['customer', 'mobil'])
+        $pesananTerbaru = Pesanan::with(['customer', 'mobil', 'details.mobil'])
             ->latest()
             ->take(5)
             ->get();

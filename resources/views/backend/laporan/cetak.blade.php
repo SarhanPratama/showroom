@@ -68,7 +68,22 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ \Carbon\Carbon::parse($laporan->tanggal_pesan)->format('d/m/Y') }}</td>
                     <td>{{ $laporan->customer->nama }}</td>
-                    <td>{{ $laporan->mobil->nama_mobil }}</td>
+                    <td>
+                        @if($laporan->details->count() > 0)
+                            <ul style="padding-left: 15px; margin: 0;">
+                                @foreach($laporan->details as $detail)
+                                    <li>
+                                        {{ $detail->mobil ? $detail->mobil->nama_mobil : 'Mobil dihapus' }}
+                                        ({{ $detail->jumlah }}x)
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @elseif($laporan->mobil)
+                            {{ $laporan->mobil->nama_mobil }}
+                        @else
+                            <span style="color: red; font-style: italic;">Data mobil tidak ditemukan</span>
+                        @endif
+                    </td>
                     <td>{{ ucfirst($laporan->status_pesanan) }}</td>
                     <td>Rp {{ number_format($laporan->total_harga, 0, ',', '.') }}</td>
                 </tr>
