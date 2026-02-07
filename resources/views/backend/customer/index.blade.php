@@ -6,6 +6,13 @@
             Data Customer
         </h2>
 
+        <div class="flex items-center justify-between mb-6">
+            <a href="{{ route('customer.create') }}"
+                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Tambah Customer &plus;
+            </a>
+        </div>
+
         <!-- TABLE -->
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">

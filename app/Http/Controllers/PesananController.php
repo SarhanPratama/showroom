@@ -21,17 +21,45 @@ class PesananController extends Controller
      */
     public function create()
     {
-        // Usually created by customer, but admin might need manual entry later
-        // return view('backend.pesanan.create');
-        return abort(404);
+        $customers = \App\Models\Customer::all();
+        $mobils = \App\Models\Mobil::where('stok', '>', 0)->get();
+        return view('backend.pesanan.create', compact('customers', 'mobils'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // To be implemented if admin creation is needed
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'mobil_id' => 'required|exists:mobils,id',
+            'tanggal_pesan' => 'required|date',
+            'status_pesanan' => 'required|in:pending,diproses,selesai,batal',
+        ]);
+
+        $mobil = \App\Models\Mobil::findOrFail($request->mobil_id);
+
+        if ($mobil->stok < 1) {
+            return back()->with('error', 'Stok mobil habis!');
+        }
+
+        // Create Order
+        Pesanan::create([
+            'customer_id' => $request->customer_id,
+            'mobil_id' => $request->mobil_id,
+            'tanggal_pesan' => $request->tanggal_pesan,
+            'status_pesanan' => $request->status_pesanan,
+            'total_harga' => $mobil->harga, // Auto price from Mobil
+        ]);
+
+        // Decrement Stock
+        $mobil->decrement('stok');
+
+        // Update Inventory Log if exists
+        $inventory = \App\Models\InventoryMobil::where('mobil_id', $mobil->id)->first();
+        if ($inventory) {
+            $inventory->update(['jumlah_stok' => $mobil->stok, 'status_ready' => $mobil->stok > 0]);
+        }
+
+        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dibuat');
     }
 
     /**
