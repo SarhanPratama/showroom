@@ -20,12 +20,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Admin
-        Admin::create([
-            'nama' => 'Super Admin',
-            'email' => 'admin@showroom.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
+        $this->call([
+            AdminSeeder::class,
         ]);
 
         // 2. Merek

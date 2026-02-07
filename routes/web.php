@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\MerekController;
@@ -15,23 +15,32 @@ Route::get('/', function () {
     return view('frontend.frontend');
 });
 
-Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+// Auth Routes
+Route::get('admin/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('admin/login', [AuthController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-// Master Data
-Route::resource('admin/mobil', MobilController::class);
-Route::resource('admin/merek', MerekController::class);
-Route::resource('admin/tipe', TipeMobilController::class);
-Route::resource('admin/promo', PromoController::class);
-// Transaksi
-Route::resource('admin/pesanan', PesananController::class);
+// Protected Admin Routes
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-// Pengguna
-Route::resource('admin/customer', CustomerController::class);
-Route::resource('admin/admin', AdminController::class);
+    // Master Data
+    Route::resource('admin/mobil', MobilController::class);
+    Route::resource('admin/merek', MerekController::class);
+    Route::resource('admin/tipe', TipeMobilController::class);
+    Route::resource('admin/promo', PromoController::class);
 
-// Laporan
-Route::get('admin/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-Route::get('admin/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+    // Transaksi
+    Route::resource('admin/pesanan', PesananController::class);
+
+    // Pengguna
+    Route::resource('admin/customer', CustomerController::class);
+    Route::resource('admin/admin', AdminController::class);
+
+    // Laporan
+    Route::get('admin/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('admin/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+});
 
 Route::get('/detail', function () {
     return view('frontend.detail');

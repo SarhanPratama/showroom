@@ -129,40 +129,9 @@ class PesananController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, string $id)
+    public function destroy(string $id)
     {
-        $pesanan = Pesanan::with('details.mobil')->findOrFail($id);
-
-        // Logic for returning stock
-        $shouldRestoreStock = false;
-
-        if ($pesanan->status_pesanan == 'selesai') {
-            // Only restore if explicitly requested
-            if ($request->has('restore_stock') && $request->restore_stock == 'yes') {
-                $shouldRestoreStock = true;
-            }
-        } elseif (in_array($pesanan->status_pesanan, ['pending', 'diproses'])) {
-            // Always restore for unfinished orders to prevent stock leak
-            $shouldRestoreStock = true;
-        }
-
-        if ($shouldRestoreStock) {
-            foreach ($pesanan->details as $detail) {
-                if ($detail->mobil) {
-                    $detail->mobil->increment('stok', $detail->jumlah);
-
-                    // Update Inventory Log
-                    $inventory = \App\Models\InventoryMobil::where('mobil_id', $detail->mobil_id)->first();
-                    if ($inventory) {
-                        $inventory->update([
-                            'jumlah_stok' => $detail->mobil->stok,
-                            'status_ready' => $detail->mobil->stok > 0
-                        ]);
-                    }
-                }
-            }
-        }
-
+        $pesanan = Pesanan::findOrFail($id);
         $pesanan->delete();
 
         return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dihapus');

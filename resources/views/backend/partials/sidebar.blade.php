@@ -83,7 +83,8 @@
             </svg>
             <span class="ml-4">Transaksi</span>
           </span>
-          <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': isTransaksiMenuOpen }" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': isTransaksiMenuOpen }"
+            aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clip-rule="evenodd"></path>
@@ -95,10 +96,12 @@
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
             class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-400"
             aria-label="submenu">
-            <li class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <li
+              class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
               <a class="block w-full" href="{{ route('pesanan.index') }}">Pesanan</a>
             </li>
-            <li class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <li
+              class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
               <a class="block w-full" href="{{ route('laporan.index') }}">Laporan</a>
             </li>
           </ul>
@@ -120,7 +123,8 @@
             </svg>
             <span class="ml-4">Pengguna</span>
           </span>
-          <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': isPenggunaMenuOpen }" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': isPenggunaMenuOpen }"
+            aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clip-rule="evenodd"></path>
@@ -132,20 +136,12 @@
             x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0"
             class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 bg-gray-50 dark:bg-gray-900 rounded-md shadow-inner dark:text-gray-400"
             aria-label="submenu">
-            <li class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <li
+              class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
               <a class="block w-full" href="{{ route('customer.index') }}">Customer</a>
             </li>
-            <li class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
-              <a class="flex items-center w-full" href="{{ route('customer.create') }}">
-                <span class="w-2 h-2 mr-2 bg-teal-500 rounded-full"></span> Customer Baru
-              </a>
-            </li>
-            <li class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
-              <a class="flex items-center w-full" href="{{ route('admin.create') }}">
-                <span class="w-2 h-2 mr-2 bg-red-500 rounded-full"></span> Admin Baru
-              </a>
-            </li>
-            <li class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <li
+              class="px-2 py-1 transition-colors duration-150 rounded-md hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
               <a class="block w-full" href="{{ route('admin.index') }}">Admin</a>
             </li>
           </ul>

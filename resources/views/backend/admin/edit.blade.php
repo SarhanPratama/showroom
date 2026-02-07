@@ -2,27 +2,38 @@
 
 @section('content')
     <div class="container px-6 mx-auto grid">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Tambah Administrator</h2>
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Edit Profile Admin
+        </h2>
+
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{ route('admin.store') }}" method="POST" autocomplete="off">
+            <form action="{{ route('admin.update', $admin->id) }}" method="POST">
                 @csrf
+                @method('PUT')
+
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nama Lengkap</span>
-                    <input name="nama" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input"
-                        required />
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="Nama Admin" name="nama" type="text" value="{{ old('nama', $admin->nama) }}" required />
                 </label>
+
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Email</span>
-                    <input type="email" name="email" autocomplete="off"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" required />
+                    <input
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="admin@example.com" name="email" type="email" value="{{ old('email', $admin->email) }}"
+                        required />
                 </label>
+
                 <div class="mt-4" x-data="{ show: false }">
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Password</span>
+                        <span class="text-gray-700 dark:text-gray-400">Password (Kosongkan jika tidak ingin
+                            mengganti)</span>
                         <div class="relative">
-                            <input :type="show ? 'text' : 'password'" name="password" autocomplete="new-password"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input pr-10"
-                                required />
+                            <input :type="show ? 'text' : 'password'" name="password"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input pr-10"
+                                placeholder="Minimal 8 karakter" />
                             <button type="button" @click="show = !show"
                                 class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 focus:outline-none">
                                 <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,11 +53,12 @@
                         </div>
                     </label>
                 </div>
+
                 <div class="flex mt-6 text-sm">
                     <button type="submit"
-                        class="px-4 py-2 font-medium text-white bg-purple-600 rounded-lg hover:bg-purple-700">Simpan</button>
-                    <a href="{{ route('admin.index') }}"
-                        class="ml-4 px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">Batal</a>
+                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Simpan Perubahan
+                    </button>
                 </div>
             </form>
         </div>

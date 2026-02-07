@@ -37,6 +37,32 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->with('success', 'Admin berhasil ditambahkan');
     }
 
+    public function edit(string $id)
+    {
+        $admin = Admin::findOrFail($id);
+        return view('backend.admin.edit', compact('admin'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $admin = Admin::findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins,email,' . $id,
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        $admin->nama = $request->nama;
+        $admin->email = $request->email;
+        if ($request->filled('password')) {
+            $admin->password = Hash::make($request->password);
+        }
+        $admin->save();
+
+        return redirect()->back()->with('success', 'Profile berhasil diperbarui');
+    }
+
     public function destroy(string $id)
     {
         $admin = Admin::findOrFail($id);

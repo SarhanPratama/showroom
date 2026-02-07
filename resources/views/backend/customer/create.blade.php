@@ -7,7 +7,7 @@
         </h2>
 
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{ route('customer.store') }}" method="POST">
+            <form action="{{ route('customer.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nama Lengkap</span>
@@ -18,14 +18,14 @@
 
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Email</span>
-                    <input type="email" name="email" required
+                    <input type="email" name="email" required autocomplete="off"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="email@example.com">
                 </label>
 
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Password</span>
-                    <input type="password" name="password" required minlength="8"
+                    <input type="password" name="password" required minlength="8" autocomplete="new-password"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="********">
                 </label>
