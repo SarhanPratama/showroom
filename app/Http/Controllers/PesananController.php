@@ -30,33 +30,62 @@ class PesananController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
-            'mobil_id' => 'required|exists:mobils,id',
             'tanggal_pesan' => 'required|date',
             'status_pesanan' => 'required|in:pending,diproses,selesai,batal',
+            'items' => 'required|array|min:1',
+            'items.*.mobil_id' => 'required|exists:mobils,id',
+            'items.*.jumlah' => 'required|integer|min:1',
         ]);
 
-        $mobil = \App\Models\Mobil::findOrFail($request->mobil_id);
+        $total_harga = 0;
+        $itemsToProcess = [];
 
-        if ($mobil->stok < 1) {
-            return back()->with('error', 'Stok mobil habis!');
+        // Pre-validate stock and calculate total
+        foreach ($request->items as $item) {
+            $mobil = \App\Models\Mobil::findOrFail($item['mobil_id']);
+            if ($mobil->stok < $item['jumlah']) {
+                return back()->with('error', 'Stok mobil ' . $mobil->nama_mobil . ' tidak mencukupi! (Sisa: ' . $mobil->stok . ')');
+            }
+            $subtotal = $mobil->harga * $item['jumlah'];
+            $total_harga += $subtotal;
+
+            $itemsToProcess[] = [
+                'mobil' => $mobil,
+                'jumlah' => $item['jumlah'],
+                'subtotal' => $subtotal
+            ];
         }
 
         // Create Order
-        Pesanan::create([
+        $pesanan = Pesanan::create([
             'customer_id' => $request->customer_id,
-            'mobil_id' => $request->mobil_id,
             'tanggal_pesan' => $request->tanggal_pesan,
             'status_pesanan' => $request->status_pesanan,
-            'total_harga' => $mobil->harga, // Auto price from Mobil
+            'total_harga' => $total_harga,
+            // 'mobil_id' => null // No longer used or set to first item's mobil_id if needed for legacy
         ]);
 
-        // Decrement Stock
-        $mobil->decrement('stok');
+        // Process Items
+        foreach ($itemsToProcess as $proc) {
+            // Create Detail
+            \App\Models\DetailPesanan::create([
+                'pesanan_id' => $pesanan->id,
+                'mobil_id' => $proc['mobil']->id,
+                'jumlah' => $proc['jumlah'],
+                'subtotal' => $proc['subtotal'],
+            ]);
 
-        // Update Inventory Log if exists
-        $inventory = \App\Models\InventoryMobil::where('mobil_id', $mobil->id)->first();
-        if ($inventory) {
-            $inventory->update(['jumlah_stok' => $mobil->stok, 'status_ready' => $mobil->stok > 0]);
+            // Decrement Stock
+            $proc['mobil']->decrement('stok', $proc['jumlah']);
+
+            // Update Inventory Log
+            $inventory = \App\Models\InventoryMobil::where('mobil_id', $proc['mobil']->id)->first();
+            if ($inventory) {
+                $inventory->update([
+                    'jumlah_stok' => $proc['mobil']->stok,
+                    'status_ready' => $proc['mobil']->stok > 0
+                ]);
+            }
         }
 
         return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dibuat');
@@ -100,9 +129,40 @@ class PesananController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $pesanan = Pesanan::findOrFail($id);
+        $pesanan = Pesanan::with('details.mobil')->findOrFail($id);
+
+        // Logic for returning stock
+        $shouldRestoreStock = false;
+
+        if ($pesanan->status_pesanan == 'selesai') {
+            // Only restore if explicitly requested
+            if ($request->has('restore_stock') && $request->restore_stock == 'yes') {
+                $shouldRestoreStock = true;
+            }
+        } elseif (in_array($pesanan->status_pesanan, ['pending', 'diproses'])) {
+            // Always restore for unfinished orders to prevent stock leak
+            $shouldRestoreStock = true;
+        }
+
+        if ($shouldRestoreStock) {
+            foreach ($pesanan->details as $detail) {
+                if ($detail->mobil) {
+                    $detail->mobil->increment('stok', $detail->jumlah);
+
+                    // Update Inventory Log
+                    $inventory = \App\Models\InventoryMobil::where('mobil_id', $detail->mobil_id)->first();
+                    if ($inventory) {
+                        $inventory->update([
+                            'jumlah_stok' => $detail->mobil->stok,
+                            'status_ready' => $detail->mobil->stok > 0
+                        ]);
+                    }
+                }
+            }
+        }
+
         $pesanan->delete();
 
         return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dihapus');

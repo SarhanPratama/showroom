@@ -37,4 +37,9 @@ class Mobil extends Model
     {
         return $this->belongsToMany(Promo::class, 'mobil_promo');
     }
+
+    public function detailPesanans()
+    {
+        return $this->hasMany(DetailPesanan::class);
+    }
 }

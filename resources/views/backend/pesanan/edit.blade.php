@@ -13,10 +13,25 @@
                 <div class="p-4 bg-gray-50 rounded-lg dark:bg-gray-700">
                     <p class="text-sm text-gray-600 dark:text-gray-400"><span class="font-bold">Customer:</span>
                         {{ $pesanan->customer->nama }} ({{ $pesanan->customer->no_hp }})</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400"><span class="font-bold">Mobil:</span>
-                        {{ $pesanan->mobil->nama_mobil }}</p>
+                    <div class="mb-2">
+                        <span class="font-bold text-sm text-gray-600 dark:text-gray-400">Mobil Dipesan:</span>
+                        @if($pesanan->details && $pesanan->details->count() > 0)
+                            <ul class="list-disc list-inside mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                @foreach($pesanan->details as $detail)
+                                    <li>
+                                        {{ $detail->mobil->nama_mobil ?? 'Mobil dihapus' }}
+                                        Box <span class="font-bold">x{{ $detail->jumlah }}</span>
+                                        (Rp {{ number_format($detail->subtotal, 0, ',', '.') }})
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ $pesanan->mobil->nama_mobil ?? '-' }}</p>
+                        @endif
+                    </div>
                     <p class="text-sm text-gray-600 dark:text-gray-400"><span class="font-bold">Total Harga:</span> Rp
-                        {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                        {{ number_format($pesanan->total_harga, 0, ',', '.') }}
+                    </p>
                     <p class="text-sm text-gray-600 dark:text-gray-400"><span class="font-bold">Tanggal Pesan:</span>
                         {{ \Carbon\Carbon::parse($pesanan->tanggal_pesan)->format('d F Y') }}</p>
                 </div>
