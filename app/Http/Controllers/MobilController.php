@@ -42,7 +42,13 @@ class MobilController extends Controller
             'tipe_id' => 'required|exists:tipe_mobils,id',
             'stok' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('mobils', 'public');
+        }
 
         $mobil = Mobil::create([
             'nama_mobil' => $request->nama_mobil,
@@ -51,6 +57,7 @@ class MobilController extends Controller
             'deskripsi' => $request->deskripsi,
             'merek_id' => $request->merek_id,
             'tipe_id' => $request->tipe_id,
+            'image' => $imagePath,
         ]);
 
         // Sync with Inventory
@@ -94,9 +101,20 @@ class MobilController extends Controller
             'tipe_id' => 'required|exists:tipe_mobils,id',
             'stok' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $mobil = Mobil::findOrFail($id);
+
+        $imagePath = $mobil->image;
+        if ($request->hasFile('image')) {
+            // Delete old image if it's not a URL
+            if ($mobil->image && !str_starts_with($mobil->image, 'http')) {
+                Storage::disk('public')->delete($mobil->image);
+            }
+            $imagePath = $request->file('image')->store('mobils', 'public');
+        }
+
         $mobil->update([
             'nama_mobil' => $request->nama_mobil,
             'harga' => $request->harga,
@@ -104,6 +122,7 @@ class MobilController extends Controller
             'deskripsi' => $request->deskripsi,
             'merek_id' => $request->merek_id,
             'tipe_id' => $request->tipe_id,
+            'image' => $imagePath,
         ]);
 
         // Update Inventory

@@ -7,7 +7,7 @@
         </h2>
 
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{ route('mobil.update', $mobil->id) }}" method="POST">
+            <form action="{{ route('mobil.update', $mobil->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -17,6 +17,26 @@
                     <input name="nama_mobil" value="{{ old('nama_mobil', $mobil->nama_mobil) }}"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         required />
+                </label>
+
+                <!-- Gambar Mobil Saat Ini -->
+                @if($mobil->image)
+                    <div class="mt-4">
+                        <span class="text-sm text-gray-700 dark:text-gray-400">Gambar Saat Ini</span>
+                        <div class="mt-1">
+                            <img src="{{ str_starts_with($mobil->image, 'http') ? $mobil->image : Storage::url($mobil->image) }}"
+                                class="w-32 h-24 object-cover rounded-lg border">
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Upload Gambar Baru -->
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Ganti Gambar Mobil (Opsional)</span>
+                    <input type="file" name="image" accept="image/*"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
+                    <span class="text-xs text-gray-500">Abaikan jika tidak ingin mengganti gambar. Format: JPG, PNG,
+                        WEBP.</span>
                 </label>
 
                 <!-- Harga -->

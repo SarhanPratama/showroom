@@ -2,474 +2,390 @@
 
 @section('content')
 
-<!-- Hero Section Slider -->
-<section id="home" class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-    <!-- Slider Container -->
-    <div id="slider-container" class="flex h-full transition-transform duration-700 ease-in-out">
+    <!-- Hero Section Slider -->
+    <section id="home" class="relative w-full h-[85vh] overflow-hidden bg-slate-900">
+        <!-- Slider Container -->
+        <div id="slider-container" class="flex h-full transition-transform duration-700 ease-in-out">
 
-        <!-- Slide 1: Promo Umum -->
-        <div class="slide min-w-full h-full relative bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&auto=format&fit=crop');">
-            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
-                <div class="container mx-auto px-4 text-white animate-text-in">
-                    <div class="max-w-2xl">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Temukan Mobil Impian Anda</h2>
-                        <p class="text-xl md:text-2xl mb-8 text-gray-200">Koleksi mobil bekas berkualitas dengan harga dan kondisi terbaik di Pekanbaru.</p>
-                        <a href="#katalog" class="bg-purple-600 text-white px-8 py-4 rounded-full font-bold hover:bg-purple-700 transition transform hover:scale-105 inline-block">
-                            <i class="fas fa-car mr-2"></i> Lihat Katalog
-                        </a>
+            @forelse($sliders as $slider)
+                <div class="slide min-w-full h-full relative bg-cover bg-center"
+                    style="background-image: url('{{ str_starts_with($slider->image, 'http') ? $slider->image : Storage::url($slider->image) }}');">
+                    <div class="absolute inset-0 bg-slate-900/70 flex items-center">
+                        <div class="container mx-auto px-6 text-white">
+                            <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
+                                @if($slider->badge_text)
+                                    <span
+                                        class="{{ str_contains(strtolower($slider->badge_text), 'promo') ? 'bg-red-600' : 'bg-blue-600' }} text-white py-1.5 px-4 rounded-full text-xs font-bold tracking-wider uppercase mb-6 inline-block shadow-lg">
+                                        {{ $slider->badge_text }}
+                                    </span>
+                                @endif
+                                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-white">
+                                    {!! nl2br(e($slider->title)) !!}
+                                </h2>
+                                @if($slider->subtitle)
+                                    <p class="text-lg md:text-xl mb-10 text-slate-300 font-light leading-relaxed max-w-2xl">
+                                        {{ $slider->subtitle }}
+                                    </p>
+                                @endif
+                                <div class="flex flex-wrap gap-4">
+                                    @if($slider->button_text && $slider->button_link)
+                                        <a href="{{ $slider->button_link }}"
+                                            class="btn-primary px-8 py-4 rounded-lg font-bold flex items-center gap-2 transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/30">
+                                            <i class="fas fa-car shadow-none group-hover:animate-bounce"></i> {{ $slider->button_text }}
+                                        </a>
+                                    @endif
+                                    @if($loop->first && isset($settings['whatsapp']))
+                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp']) }}"
+                                            target="_blank"
+                                            class="bg-white text-slate-900 px-8 py-4 rounded-lg font-bold hover:bg-slate-100 transform transition-all duration-300 hover:scale-105 shadow-lg flex items-center gap-2">
+                                            <i class="fab fa-whatsapp text-green-500 group-hover:scale-110 transition-transform"></i> Hubungi Kami
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Slide 2: Promo DP Ringan -->
-        <div class="slide min-w-full h-full relative bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&auto=format&fit=crop');">
-            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
-                <div class="container mx-auto px-4 text-white animate-text-in">
-                    <div class="max-w-2xl">
-                        <span class="bg-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold mb-3 inline-block">PROMO SPESIAL</span>
-                        <h2 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">DP Ringan, Angsuran Terjangkau</h2>
-                        <p class="text-xl md:text-2xl mb-8 text-gray-200">Miliki mobil idaman dengan skema kredit fleksibel. Proses cepat dan mudah dibantu sampai deal!</p>
-                        <a href="#katalog" class="bg-white text-purple-700 px-8 py-4 rounded-full font-bold hover:bg-gray-200 transition transform hover:scale-105 inline-block">
-                            <i class="fas fa-calculator mr-2"></i> Cek Simulasi Kredit
-                        </a>
+            @empty
+                <div class="slide min-w-full h-full relative bg-slate-800 flex items-center justify-center">
+                    <div class="text-white text-center">
+                        <h2 class="text-4xl font-bold">Selamat Datang di {{ $settings['site_tagline'] ?? 'Showroom' }}</h2>
                     </div>
                 </div>
-            </div>
+            @endforelse
+
         </div>
 
-        <!-- Slide 3: Promo Tukar Tambah -->
-        <div class="slide min-w-full h-full relative bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1616422285855-b9b2b5a5b5b5?w=1200&auto=format&fit=crop');">
-            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
-                <div class="container mx-auto px-4 text-white animate-text-in">
-                     <div class="max-w-2xl">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Tukar Tambah? Tentu Bisa!</h2>
-                        <p class="text-xl md:text-2xl mb-8 text-gray-200">Dapatkan penawaran harga terbaik untuk mobil lama Anda. Tukar dengan unit yang lebih baru di showroom kami.</p>
-                        <a href="https://wa.me/6281380846977" target="_blank" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition transform hover:scale-105 inline-block">
-                            <i class="fab fa-whatsapp mr-2"></i> Konsultasi Sekarang
-                        </a>
+        @if($sliders->count() > 1)
+            <!-- Navigation Buttons -->
+            <button id="prevBtn"
+                class="absolute top-1/2 left-4 md:left-8 transform -translate-y-1/2 bg-slate-900/40 hover:bg-blue-600 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] z-30">
+                <i class="fas fa-chevron-left text-xl"></i>
+            </button>
+            <button id="nextBtn"
+                class="absolute top-1/2 right-4 md:right-8 transform -translate-y-1/2 bg-slate-900/40 hover:bg-blue-600 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] z-30">
+                <i class="fas fa-chevron-right text-xl"></i>
+            </button>
+        @endif
+    </section>
+
+    <!-- Search Section (Clean Layout) -->
+    <section class="py-12 bg-white border-b border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <form action="{{ url('/') }}#katalog" method="GET"
+                    class="bg-white rounded-xl shadow-lg border border-slate-200 p-8 flex flex-col md:flex-row gap-6 items-end -mt-24 relative z-20">
+                    <div class="w-full">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Merek</label>
+                        <div class="relative">
+                            <select name="merek"
+                                class="w-full appearance-none border border-slate-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition bg-slate-50 text-slate-700">
+                                <option value="Semua Merek">Semua Merek</option>
+                                @foreach(\App\Models\Merek::all() as $merek)
+                                    <option value="{{ $merek->id }}" {{ request('merek') == $merek->id ? 'selected' : '' }}>{{ $merek->nama_merek }}</option>
+                                @endforeach
+                            </select>
+                            <i
+                                class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                        </div>
                     </div>
-                </div>
+                    <div class="w-full">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Tipe</label>
+                        <div class="relative">
+                            <select name="tipe"
+                                class="w-full appearance-none border border-slate-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition bg-slate-50 text-slate-700">
+                                <option value="Semua Tipe">Semua Tipe</option>
+                                @foreach(\App\Models\TipeMobil::all() as $tipe)
+                                    <option value="{{ $tipe->id }}" {{ request('tipe') == $tipe->id ? 'selected' : '' }}>{{ $tipe->nama_tipe }}</option>
+                                @endforeach
+                            </select>
+                            <i
+                                class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    <div class="w-full">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Harga</label>
+                        <div class="relative">
+                            <select name="harga"
+                                class="w-full appearance-none border border-slate-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition bg-slate-50 text-slate-700">
+                                <option value="Semua Harga">Semua Harga</option>
+                                <option value="< 100 Juta" {{ request('harga') == '< 100 Juta' ? 'selected' : '' }}>< 100 Juta</option>
+                                <option value="100 - 200 Juta" {{ request('harga') == '100 - 200 Juta' ? 'selected' : '' }}>100 - 200 Juta</option>
+                                <option value="> 200 Juta" {{ request('harga') == '> 200 Juta' ? 'selected' : '' }}>> 200 Juta</option>
+                            </select>
+                            <i
+                                class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <button type="submit"
+                            class="w-full btn-accent px-8 py-3 rounded-lg font-bold shadow-lg flex items-center justify-center gap-2 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/40 group">
+                            <i class="fas fa-search group-hover:rotate-12 transition-transform"></i> Cari
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-
-    </div>
-
-    <!-- Navigation Buttons -->
-    <button id="prevBtn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-100 text-gray-800 p-3 rounded-full transition">
-        <i class="fas fa-chevron-left"></i>
-    </button>
-    <button id="nextBtn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-100 text-gray-800 p-3 rounded-full transition">
-        <i class="fas fa-chevron-right"></i>
-    </button>
-
-    <!-- Navigation Dots -->
-    <div id="dots-container" class="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
-        <!-- Dots will be generated by JS -->
-    </div>
-</section>
-<!-- End of Hero Section Slider -->
-
+    </section>
 
     <!-- Keunggulan Layanan -->
-    <section id="layanan" class="py-16 bg-white">
+    <section id="layanan" class="py-20 bg-slate-50">
         <div class="container mx-auto px-4">
-            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Mengapa Memilih Kami?</h3>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Layanan Kami</h3>
+                <p class="text-slate-600 max-w-2xl mx-auto">Kami berkomitmen memberikan pengalaman jual beli mobil bekas
+                    terbaik dengan pelayanan profesional.</p>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center card-hover bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl shadow-lg">
-                    <div class="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-check-circle text-3xl text-purple-600"></i>
+                @forelse($layanans as $layanan)
+                    <div class="card-clean p-8 rounded-2xl group border border-slate-100/50 hover:border-blue-100 transition-all duration-500" data-aos="fade-up"
+                        data-aos-delay="{{ $loop->iteration * 100 }}">
+                        <div
+                            class="w-16 h-16 bg-blue-50/80 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:-translate-y-2 transition-all duration-500 shadow-sm group-hover:shadow-[0_10px_30px_rgba(37,99,235,0.3)] shrink-0">
+                            <i
+                                class="{{ $layanan->icon_class }} text-3xl text-blue-600 group-hover:text-white transition-colors duration-500 group-hover:scale-110"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-slate-900 group-hover:text-blue-600 transition-colors duration-300">{{ $layanan->title }}</h4>
+                        <p class="text-slate-600 leading-relaxed">{{ $layanan->description }}</p>
                     </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-800">Jaminan Kualitas</h4>
-                    <p class="text-gray-600">Mobil sudah melewati inspeksi ketat untuk memastikan kondisi prima</p>
-                </div>
-                <div class="text-center card-hover bg-gradient-to-br from-green-50 to-white p-8 rounded-2xl shadow-lg">
-                    <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-sync-alt text-3xl text-green-600"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-800">Terima Tukar Tambah</h4>
-                    <p class="text-gray-600">Proses mudah dan penawaran terbaik untuk mobil lama Anda</p>
-                </div>
-                <div class="text-center card-hover bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg">
-                    <div class="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-money-bill-wave text-3xl text-blue-600"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-800">Cash & Kredit</h4>
-                    <p class="text-gray-600">Pilihan pembayaran fleksibel dengan DP rendah</p>
-                </div>
+                @empty
+                    <div class="col-span-3 text-center text-slate-500">Layanan sedang diperbarui.</div>
+                @endforelse
             </div>
         </div>
     </section>
 
-    <!-- Pencarian Cepat -->
-    <section class="py-12 bg-gradient-to-r from-purple-100 to-blue-100">
+    <!-- Katalog Mobil -->
+    <section id="katalog" class="py-20 bg-white">
         <div class="container mx-auto px-4">
-            <h3 class="text-2xl font-bold text-center mb-8 text-gray-800">Pencarian Cepat</h3>
-            <div class="bg-white rounded-2xl shadow-xl p-6 max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <select class="border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none">
-                        <option>Pilih Merek</option>
-                        <option>Toyota</option>
-                        <option>Daihatsu</option>
-                        <option>Honda</option>
-                        <option>Mitsubishi</option>
-                        <option>Suzuki</option>
-                    </select>
-                    <select class="border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none">
-                        <option>Pilih Tipe</option>
-                        <option>Avanza</option>
-                        <option>Ayla</option>
-                        <option>Brio</option>
-                        <option>Xpander</option>
-                        <option>Ertiga</option>
-                    </select>
-                    <select class="border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-purple-500 focus:outline-none">
-                        <option>Rentang Harga</option>
-                        <option>&lt; 100 Juta</option>
-                        <option>100 - 150 Juta</option>
-                        <option>150 - 200 Juta</option>
-                        <option>&gt; 200 Juta</option>
-                    </select>
-                    <button class="bg-purple-600 text-white rounded-lg px-6 py-3 font-bold hover:bg-purple-700 transition transform hover:scale-105">
-                        <i class="fas fa-search mr-2"></i> Cari Mobil
-                    </button>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6" data-aos="fade-up">
+                <div>
+                    <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">Pilihan Terbaik</span>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900">Stok Mobil Terbaru</h3>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Katalog Mobil / Stok Terbaru -->
-    <section id="katalog" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Stok Mobil Terbaru</h3>
-
-            <!-- Filter Options -->
-            <div class="mb-8 bg-white rounded-xl p-4 shadow-md">
-                <div class="flex flex-wrap gap-4 items-center">
-                    <span class="font-semibold">Filter:</span>
-                    <button class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition">
-                        <i class="fas fa-filter mr-1"></i> Semua
-                    </button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
-                        Manual
-                    </button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
-                        Otomatis
-                    </button>
-                    <div class="ml-auto flex items-center gap-2">
-                        <span class="text-sm">Urutkan:</span>
-                        <select class="border rounded-lg px-3 py-2 text-sm">
-                            <option>Terbaru</option>
-                            <option>Harga Terendah</option>
-                            <option>Harga Tertinggi</option>
-                        </select>
-                    </div>
-                </div>
+                <a href="#" class="text-blue-600 font-bold hover:text-blue-800 transition flex items-center gap-2">
+                    Lihat Semua <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
 
-            <!-- Grid Mobil -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Mobil 1 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=400" alt="Daihatsu Ayla" class="w-full h-48 object-cover">
-                        <span class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            HOT DEAL
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Daihatsu Ayla 1.0 X MT</h4>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                            <span><i class="fas fa-calendar"></i> 2020</span>
-                            <span><i class="fas fa-road"></i> 45.000 km</span>
-                            <span><i class="fas fa-cog"></i> Manual</span>
-                        </div>
-                        <div class="border-t pt-4">
-                            <p class="text-2xl font-bold text-purple-600">Rp 110.000.000</p>
-                            <p class="text-sm text-green-600 font-semibold mt-1">
-                                <i class="fas fa-tag"></i> DP Mulai 10 Juta
-                            </p>
-                        </div>
-                        <button onclick="showDetail('Daihatsu Ayla 1.0 X MT 2020')" class="w-full mt-4 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Lihat Detail
-                        </button>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse($mobils as $mobil)
+                    <div class="card-clean rounded-2xl overflow-hidden group hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-slate-100" data-aos="fade-up"
+                        data-aos-delay="{{ $loop->iteration * 100 }}">
+                        <div class="relative overflow-hidden h-60 bg-slate-100">
+                            @if($mobil->image)
+                                <img src="{{ str_starts_with($mobil->image, 'http') ? $mobil->image : Storage::url($mobil->image) }}"
+                                    alt="{{ $mobil->merek->nama_merek }} {{ $mobil->nama_mobil }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center bg-slate-100 text-slate-300 group-hover:bg-slate-200 transition-colors duration-500">
+                                    <i class="fas fa-car text-6xl group-hover:scale-110 transition-transform duration-500"></i>
+                                </div>
+                            @endif
 
-                <!-- Mobil 2 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=400" alt="Toyota Avanza" class="w-full h-48 object-cover">
-                        <span class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            BEST SELLER
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Toyota Avanza 1.3 G MT</h4>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                            <span><i class="fas fa-calendar"></i> 2018</span>
-                            <span><i class="fas fa-road"></i> 60.000 km</span>
-                            <span><i class="fas fa-cog"></i> Manual</span>
-                        </div>
-                        <div class="border-t pt-4">
-                            <p class="text-2xl font-bold text-purple-600">Rp 158.000.000</p>
-                            <p class="text-sm text-green-600 font-semibold mt-1">
-                                <i class="fas fa-tag"></i> DP Mulai 20 Juta
-                            </p>
-                        </div>
-                        <button onclick="showDetail('Toyota Avanza 1.3 G MT 2018')" class="w-full mt-4 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Lihat Detail
-                        </button>
-                    </div>
-                </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                <!-- Mobil 3 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1588636142475-a62d56692870?w=400" alt="Honda Brio" class="w-full h-48 object-cover">
-                        <span class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            READY
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Honda Brio Satya E CVT</h4>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                            <span><i class="fas fa-calendar"></i> 2019</span>
-                            <span><i class="fas fa-road"></i> 35.000 km</span>
-                            <span><i class="fas fa-cog"></i> Otomatis</span>
+                            @if($mobil->promos->count() > 0)
+                                <span
+                                    class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded text-xs font-bold shadow-md transform -translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">PROMO</span>
+                            @elseif($loop->first)
+                                <span
+                                    class="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded text-xs font-bold shadow-md transform -translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">TERBARU</span>
+                            @endif
                         </div>
-                        <div class="border-t pt-4">
-                            <p class="text-2xl font-bold text-purple-600">Rp 145.000.000</p>
-                            <p class="text-sm text-green-600 font-semibold mt-1">
-                                <i class="fas fa-tag"></i> DP Mulai 15 Juta
-                            </p>
-                        </div>
-                        <button onclick="showDetail('Honda Brio Satya E CVT 2019')" class="w-full mt-4 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Lihat Detail
-                        </button>
-                    </div>
-                </div>
+                        <div class="p-6 relative">
+                            <!-- Floating Action Button effect on hover -->
+                            <a href="{{ route('frontend.detail', $mobil->id) }}" class="absolute -top-6 right-6 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-blue-700">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
 
-                <!-- Mobil 4 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=400" alt="Mitsubishi Xpander" class="w-full h-48 object-cover">
-                        <span class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            PROMO
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Mitsubishi Xpander GLS MT</h4>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                            <span><i class="fas fa-calendar"></i> 2021</span>
-                            <span><i class="fas fa-road"></i> 25.000 km</span>
-                            <span><i class="fas fa-cog"></i> Manual</span>
-                        </div>
-                        <div class="border-t pt-4">
-                            <p class="text-2xl font-bold text-purple-600">Rp 235.000.000</p>
-                            <p class="text-sm text-green-600 font-semibold mt-1">
-                                <i class="fas fa-tag"></i> DP Mulai 35 Juta
-                            </p>
-                        </div>
-                        <button onclick="showDetail('Mitsubishi Xpander GLS MT 2021')" class="w-full mt-4 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Lihat Detail
-                        </button>
-                    </div>
-                </div>
+                            <div class="mb-2 flex items-center gap-2">
+                                <span class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">{{ $mobil->merek->nama_merek }}</span>
+                            </div>
 
-                <!-- Mobil 5 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400" alt="Suzuki Ertiga" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Suzuki Ertiga GL MT</h4>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                            <span><i class="fas fa-calendar"></i> 2020</span>
-                            <span><i class="fas fa-road"></i> 40.000 km</span>
-                            <span><i class="fas fa-cog"></i> Manual</span>
-                        </div>
-                        <div class="border-t pt-4">
-                            <p class="text-2xl font-bold text-purple-600">Rp 175.000.000</p>
-                            <p class="text-sm text-green-600 font-semibold mt-1">
-                                <i class="fas fa-tag"></i> DP Mulai 25 Juta
-                            </p>
-                        </div>
-                        <button onclick="showDetail('Suzuki Ertiga GL MT 2020')" class="w-full mt-4 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Lihat Detail
-                        </button>
-                    </div>
-                </div>
+                            <h4 class="text-xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors duration-300 line-clamp-1">
+                                {{ $mobil->nama_mobil }}
+                            </h4>
+                            
+                            <!-- Promo Price Check -->
+                            @if($mobil->promos->count() > 0 && isset($mobil->promos->first()->diskon))
+                                <p class="text-sm border-b border-red-500 text-slate-400 line-through inline-block mb-1">Rp
+                                    {{ number_format($mobil->harga, 0, ',', '.') }}</p>
+                                <p class="text-blue-600 font-black text-2xl mb-4 tracking-tight">Rp
+                                    {{ number_format($mobil->harga - $mobil->promos->first()->diskon, 0, ',', '.') }}</p>
+                            @else
+                                <p class="text-blue-600 font-black text-2xl mb-4 tracking-tight mt-6">Rp
+                                    {{ number_format($mobil->harga, 0, ',', '.') }}</p>
+                            @endif
 
-                <!-- Mobil 6 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1581540222194-0def2dda95b8?w=400" alt="Toyota Rush" class="w-full h-48 object-cover">
-                        <span class="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            LIMITED
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-800 mb-2">Toyota Rush TRD Sportivo AT</h4>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                            <span><i class="fas fa-calendar"></i> 2021</span>
-                            <span><i class="fas fa-road"></i> 30.000 km</span>
-                            <span><i class="fas fa-cog"></i> Otomatis</span>
+                            <div class="flex items-center justify-between text-sm text-slate-500 border-t border-slate-100 pt-4 mt-2">
+                                <span class="flex items-center gap-1.5 font-medium"><i class="fas fa-calendar text-slate-400"></i> {{ $mobil->created_at->format('Y') }}</span>
+                                <span class="flex items-center gap-1.5 font-medium"><i class="fas fa-car-side text-slate-400"></i>
+                                    {{ $mobil->tipe->nama_tipe }}</span>
+                                <span class="flex items-center gap-1.5 font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-md"><i class="fas fa-check-circle"></i> Stok: {{ $mobil->stok }}</span>
+                            </div>
                         </div>
-                        <div class="border-t pt-4">
-                            <p class="text-2xl font-bold text-purple-600">Rp 265.000.000</p>
-                            <p class="text-sm text-green-600 font-semibold mt-1">
-                                <i class="fas fa-tag"></i> DP Mulai 40 Juta
-                            </p>
-                        </div>
-                        <button onclick="showDetail('Toyota Rush TRD Sportivo AT 2021')" class="w-full mt-4 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                            Lihat Detail
-                        </button>
                     </div>
-                </div>
-            </div>
-
-            <!-- Load More Button -->
-            <div class="text-center mt-12">
-                <button class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-bold hover:from-purple-700 hover:to-blue-700 transition transform hover:scale-105">
-                    <i class="fas fa-plus-circle mr-2"></i> Lihat Lebih Banyak
-                </button>
+                @empty
+                    <div class="col-span-3 text-center py-10 text-slate-500">
+                        <i class="fas fa-car-slash text-4xl mb-4 text-slate-300"></i>
+                        <p>Belum ada stok mobil tersedia saat ini.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
 
     <!-- Kontak & Lokasi -->
-    <section id="kontak" class="py-16 bg-white">
+    <section id="kontak" class="py-20 bg-slate-50">
         <div class="container mx-auto px-4">
-            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Lokasi & Kontak Kami</h3>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8 h-full">
-                        <h4 class="text-2xl font-bold mb-6 text-gray-800">Showroom Manunggal Mobilindo 2</h4>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Lokasi & Kontak</h3>
+                <p class="text-slate-600 max-w-2xl mx-auto">Kunjungi showroom kami untuk melihat langsung unit yang
+                    tersedia.</p>
+            </div>
 
-                        <div class="space-y-4 mb-6">
-                            <div class="flex items-start">
-                                <i class="fas fa-map-marker-alt text-purple-600 mt-1 mr-4 text-xl"></i>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <!-- Contact Info -->
+                <div data-aos="fade-right">
+                    <div class="card-clean p-8 rounded-xl bg-white mb-8">
+                        <h4 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                            <i class="fas fa-building text-blue-600"></i> Kantor Pusat
+                        </h4>
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
+                                    <i class="fas fa-map-marker-alt text-blue-600"></i>
+                                </div>
                                 <div>
-                                    <p class="font-semibold">Alamat:</p>
-                                    <p class="text-gray-700">Jl. Soekarno Hatta No. 88, Arengka, Pekanbaru, Riau 28293</p>
+                                    <h5 class="font-bold text-slate-900 text-sm mb-1">Alamat</h5>
+                                    <p class="text-slate-600 leading-relaxed text-sm">
+                                        {!! nl2br(e($settings['address'] ?? 'Pekanbaru, Riau')) !!}</p>
                                 </div>
                             </div>
 
-                            <div class="flex items-start">
-                                <i class="fas fa-clock text-purple-600 mt-1 mr-4 text-xl"></i>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
+                                    <i class="fas fa-clock text-blue-600"></i>
+                                </div>
                                 <div>
-                                    <p class="font-semibold">Jam Operasional:</p>
-                                    <p class="text-gray-700">Senin - Sabtu: 08:00 - 17:00</p>
-                                    <p class="text-gray-700">Minggu: 09:00 - 15:00</p>
+                                    <h5 class="font-bold text-slate-900 text-sm mb-1">Jam Operasional</h5>
+                                    <p class="text-slate-600 text-sm">Senin - Sabtu: 08:00 - 17:00 WIB</p>
+                                    <p class="text-slate-600 text-sm">Minggu: 09:00 - 15:00 WIB</p>
                                 </div>
                             </div>
 
-                            <div class="flex items-start">
-                                <i class="fas fa-phone text-purple-600 mt-1 mr-4 text-xl"></i>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
+                                    <i class="fas fa-phone-alt text-blue-600"></i>
+                                </div>
                                 <div>
-                                    <p class="font-semibold">Telepon:</p>
-                                    <p class="text-gray-700">0813-8084-6977</p>
-                                    <p class="text-gray-700">0761-123456</p>
+                                    <h5 class="font-bold text-slate-900 text-sm mb-1">Hubungi Kami</h5>
+                                    <p class="text-slate-600 font-medium text-sm">{{ $settings['whatsapp'] ?? '-' }}
+                                        (WhatsApp)</p>
+                                    <p class="text-slate-600 text-sm">{{ $settings['phone'] ?? '-' }} (Office)</p>
                                 </div>
                             </div>
-
-                            <div class="flex items-start">
-                                <i class="fas fa-envelope text-purple-600 mt-1 mr-4 text-xl"></i>
-                                <div>
-                                    <p class="font-semibold">Email:</p>
-                                    <p class="text-gray-700">info@manunggalmobilindo.com</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row gap-3">
-                            <a href="https://wa.me/6281380846977" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-600 transition text-center">
-                                <i class="fab fa-whatsapp mr-2"></i> Chat WhatsApp
-                            </a>
-                            <a href="tel:081380846977" class="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition text-center">
-                                <i class="fas fa-phone mr-2"></i> Telepon Sekarang
-                            </a>
                         </div>
                     </div>
+
+                    @if(!empty($settings['whatsapp']))
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp']) }}" target="_blank"
+                            class="w-full bg-green-500 text-white py-4 rounded-xl font-bold text-center hover:bg-green-600 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/40 flex items-center justify-center gap-2 group mt-8">
+                            <i class="fab fa-whatsapp text-2xl group-hover:scale-125 transition-transform duration-300"></i> <span class="group-hover:tracking-wide transition-all">Chat WhatsApp Sekarang</span>
+                        </a>
+                    @endif
                 </div>
 
-                <div>
-                    <div class="bg-gray-200 rounded-2xl overflow-hidden h-full min-h-[400px]">
-                        <!-- Embedded Google Maps -->
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6583684773!2d101.45506541475336!3d0.5070693996084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5aedefc5b6b51%3A0x5f5160f9c2c3b9f2!2sPekanbaru%2C%20Riau!5e0!3m2!1sen!2sid!4v1234567890"
-                            width="100%"
-                            height="100%"
-                            style="border:0; min-height: 400px;"
-                            allowfullscreen=""
-                            loading="lazy">
-                        </iframe>
-                    </div>
+                <!-- Map -->
+                <div class="h-full min-h-[400px] w-full rounded-xl overflow-hidden shadow-lg border border-slate-200 relative group"
+                    data-aos="fade-left">
+                    @if(!empty($settings['maps_iframe']))
+                        <!-- Embedded Maps from Database -->
+                        @if(str_contains($settings['maps_iframe'], '<iframe'))
+                            {!! $settings['maps_iframe'] !!}
+                        @else
+                            <iframe src="{{ $settings['maps_iframe'] }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500"></iframe>
+                        @endif
+                    @else
+                        <div class="flex items-center justify-center h-full bg-slate-200 text-slate-500">
+                            Peta Google Maps belum diset.
+                        </div>
+                    @endif
+                    <div class="absolute inset-0 pointer-events-none border-4 border-white/20 rounded-xl"></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonial Section -->
-    <section class="py-16 bg-gradient-to-r from-purple-100 to-blue-100">
-        <div class="container mx-auto px-4">
-            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Apa Kata Pelanggan Kami</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="flex mb-4">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                    </div>
-                    <p class="text-gray-600 mb-4">"Pelayanan sangat memuaskan! Proses kredit cepat dan mudah. Mobilnya berkualitas dan sesuai dengan deskripsi."</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-purple-200 rounded-full mr-3"></div>
-                        <div>
-                            <p class="font-semibold">Budi Santoso</p>
-                            <p class="text-sm text-gray-500">Pembeli Avanza 2018</p>
-                        </div>
-                    </div>
-                </div>
+    <section class="py-20 bg-slate-900 text-white relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-3xl md:text-4xl font-extrabold mb-6">Apa Kata Mereka?</h3>
+                <p class="text-slate-400 max-w-2xl mx-auto">Kepuasan pelanggan adalah prioritas utama kami.</p>
+            </div>
 
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="flex mb-4">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                    </div>
-                    <p class="text-gray-600 mb-4">"Showroom terpercaya! Saya puas dengan mobil yang saya beli. Team sales sangat membantu dalam proses pembelian."</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-green-200 rounded-full mr-3"></div>
-                        <div>
-                            <p class="font-semibold">Siti Rahma</p>
-                            <p class="text-sm text-gray-500">Pembeli Brio 2019</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @forelse($testimonials as $testimonial)
+                    <div class="bg-slate-800 p-8 rounded-xl border border-slate-700" data-aos="fade-up"
+                        data-aos-delay="{{ $loop->iteration * 100 }}">
+                        <div class="flex items-center gap-1 text-yellow-500 mb-6">
+                            @for($i = 0; $i < $testimonial->rating; $i++)
+                                <i class="fas fa-star"></i>
+                            @endfor
+                            @for($i = $testimonial->rating; $i < 5; $i++)
+                                <i class="far fa-star"></i>
+                            @endfor
+                        </div>
+                        <p class="text-slate-300 leading-relaxed mb-6 italic">
+                            "{{ $testimonial->content }}"
+                        </p>
+                        <div class="flex items-center gap-4">
+                            @if($testimonial->avatar)
+                                <img src="{{ Storage::url($testimonial->avatar) }}" class="w-10 h-10 object-cover rounded-full">
+                            @else
+                                <div
+                                    class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-white">
+                                    {{ strtoupper(substr($testimonial->name, 0, 2)) }}
+                                </div>
+                            @endif
+                            <div>
+                                <h5 class="font-bold text-white">{{ $testimonial->name }}</h5>
+                                <p class="text-xs text-slate-400">{{ $testimonial->role ?? 'Customer' }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="flex mb-4">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                    </div>
-                    <p class="text-gray-600 mb-4">"Proses tukar tambah sangat mudah dan penawaran harga yang fair. Recommended untuk yang cari mobil bekas berkualitas!"</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-blue-200 rounded-full mr-3"></div>
-                        <div>
-                            <p class="font-semibold">Ahmad Fauzi</p>
-                            <p class="text-sm text-gray-500">Pembeli Xpander 2021</p>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    <div class="col-span-3 text-center text-slate-400">Belum ada testimoni.</div>
+                @endforelse
             </div>
         </div>
     </section>
+
+    @push('scripts')
+        <script>
+            // Simple Slider Script
+            const sliderContainer = document.getElementById('slider-container');
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+
+            if (totalSlides > 1) {
+                function goToSlide(index) {
+                    if (index < 0) index = totalSlides - 1;
+                    if (index >= totalSlides) index = 0;
+                    currentSlide = index;
+                    sliderContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+                }
+
+                document.getElementById('nextBtn')?.addEventListener('click', () => goToSlide(currentSlide + 1));
+                document.getElementById('prevBtn')?.addEventListener('click', () => goToSlide(currentSlide - 1));
+                setInterval(() => goToSlide(currentSlide + 1), 6000);
+            }
+        </script>
+    @endpush
+
 @endsection

@@ -42,13 +42,29 @@
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
                                     <div class="flex items-center text-sm">
-                                        <!-- Avatar with inset shadow -->
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <div
-                                                class="absolute inset-0 rounded-full bg-purple-100 flex items-center justify-center text-purple-500 font-bold">
-                                                {{ substr($mobil->nama_mobil, 0, 1) }}
+                                        <!-- Avatar with image -->
+                                        @if($mobil->image)
+                                            <div class="relative w-12 h-12 mr-3 rounded-full md:block group cursor-pointer"
+                                                @click="$dispatch('open-img-modal', { src: '{{ str_starts_with($mobil->image, 'http') ? $mobil->image : Storage::url($mobil->image) }}' })">
+                                                <img class="object-cover w-full h-full rounded-full"
+                                                    src="{{ str_starts_with($mobil->image, 'http') ? $mobil->image : Storage::url($mobil->image) }}"
+                                                    alt="{{ $mobil->nama_mobil }}" loading="lazy" />
+                                                <div
+                                                    class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <i
+                                                        class="fas fa-search-plus text-white text-sm transform scale-75 group-hover:scale-100 transition-transform duration-300"></i>
+                                                </div>
+                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="relative hidden w-12 h-12 mr-3 rounded-full md:block">
+                                                <img class="object-cover w-full h-full rounded-full"
+                                                    src="https://ui-avatars.com/api/?name={{ urlencode($mobil->merek->nama_merek) }}&background=random"
+                                                    alt="{{ $mobil->nama_mobil }}" loading="lazy" />
+                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                                </div>
+                                            </div>
+                                        @endif
                                         <div>
                                             <p class="font-semibold">{{ $mobil->nama_mobil }}</p>
                                             <p class="text-xs text-gray-600 dark:text-gray-400">

@@ -1,61 +1,98 @@
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-car text-3xl text-purple-400"></i>
-                        <div>
-                            <h4 class="text-xl font-bold">Manunggal Mobilindo</h4>
-                            <p class="text-xs text-gray-400">Since 2010</p>
-                        </div>
+<footer class="bg-slate-950 text-white pt-16 pb-8 border-t border-slate-900">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <!-- Brand -->
+            <div>
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="bg-blue-600 p-2 rounded-lg text-white">
+                        <i class="fas fa-car-side text-xl"></i>
                     </div>
-                    <p class="text-gray-400 text-sm">Showroom mobil bekas terpercaya di Pekanbaru dengan layanan terbaik dan harga kompetitif.</p>
+                    <h4 class="text-xl font-bold tracking-tight">{{ $settings['site_title'] ?? 'Showroom' }}</h4>
                 </div>
-
-                <div>
-                    <h5 class="font-bold mb-4">Quick Links</h5>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#home" class="hover:text-white transition">Beranda</a></li>
-                        <li><a href="#katalog" class="hover:text-white transition">Katalog Mobil</a></li>
-                        <li><a href="#layanan" class="hover:text-white transition">Layanan</a></li>
-                        <li><a href="#kontak" class="hover:text-white transition">Kontak</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h5 class="font-bold mb-4">Layanan Kami</h5>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>Jual Beli Mobil Bekas</li>
-                        <li>Tukar Tambah</li>
-                        <li>Kredit DP Rendah</li>
-                        <li>Cash & Kredit</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h5 class="font-bold mb-4">Follow Us</h5>
-                    <div class="flex space-x-4 mb-4">
-                        <a href="#" class="text-gray-400 hover:text-white text-xl transition">
-                            <i class="fab fa-facebook"></i>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                    {{ $settings['site_description'] ?? 'Showroom mobil bekas terpercaya dengan standar kualitas terbaik. Aman, Cepat, dan Menguntungkan.' }}
+                </p>
+                <div class="flex space-x-4">
+                    @if(!empty($settings['facebook']))
+                        <a href="{{ $settings['facebook'] }}" target="_blank"
+                            class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition">
+                            <i class="fab fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-xl transition">
-                            <i class="fab fa-instagram"></i>
+                    @endif
+                    @if(!empty($settings['instagram']))
+                        <a href="{{ $settings['instagram'] }}" target="_blank"
+                            class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-pink-600 hover:text-white transition">
+                            <i class="fab fa-instagram text-sm"></i>
                         </a>
-                        <a href="https://wa.me/6281380846977" target="_blank" class="text-gray-400 hover:text-white text-xl transition">
-                            <i class="fab fa-whatsapp"></i>
+                    @endif
+                    @if(!empty($settings['whatsapp']))
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp']) }}" target="_blank"
+                            class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition">
+                            <i class="fab fa-whatsapp text-sm"></i>
                         </a>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-phone mr-2"></i> 0813-8084-6977
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-envelope mr-2"></i> info@manunggalmobilindo.com
-                    </p>
+                    @endif
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-                <p>&copy; 2024 Manunggal Mobilindo. All rights reserved. | Developed with <i class="fas fa-heart text-red-500"></i> in Pekanbaru</p>
+            <!-- Quick Links -->
+            <div>
+                <h5 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-6">Menu</h5>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="{{ url('/') }}#home" class="text-slate-300 hover:text-blue-500 transition">Beranda</a>
+                    </li>
+                    <li><a href="{{ url('/') }}#katalog"
+                            class="text-slate-300 hover:text-blue-500 transition">Katalog</a></li>
+                    <li><a href="{{ url('/') }}#layanan"
+                            class="text-slate-300 hover:text-blue-500 transition">Layanan</a></li>
+                    <li><a href="{{ url('/') }}#kontak" class="text-slate-300 hover:text-blue-500 transition">Hubungi
+                            Kami</a></li>
+                </ul>
+            </div>
+
+            <!-- Layanan -->
+            <div>
+                <h5 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-6">Pintasan Layanan</h5>
+                <ul class="space-y-3 text-sm">
+                    @php
+                        // Coba ambil layanan jika ada, ini view global jadi perlu fallback jika $layanans tidak dikirim
+                        $footerLayanans = \App\Models\Layanan::where('is_active', true)->orderBy('order')->take(4)->get();
+                    @endphp
+                    @forelse($footerLayanans as $lay)
+                        <li class="text-slate-300">{{ $lay->title }}</li>
+                    @empty
+                        <li class="text-slate-300">Jual Beli Mobil</li>
+                        <li class="text-slate-300">Tukar Tambah</li>
+                        <li class="text-slate-300">Kredit Fleksibel</li>
+                    @endforelse
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h5 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-6">Kantor</h5>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i class="fas fa-map-marker-alt mt-1 text-blue-500 border-none"></i>
+                        <span
+                            class="border-none">{!! nl2br(e($settings['address'] ?? 'Jl. Soekarno Hatta No. 88, Pekanbaru')) !!}</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-300">
+                        <i class="fas fa-phone border-none text-blue-500"></i>
+                        {{ $settings['phone'] ?? '0813-8084-6977' }}
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-300 border-none">
+                        <i class="fas fa-envelope text-blue-500 border-none"></i>
+                        {{ $settings['email'] ?? 'info@showroom.com' }}
+                    </li>
+                </ul>
             </div>
         </div>
-    </footer>
+
+        <div
+            class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 border-none">
+            <p class="text-slate-500 text-xs text-center md:text-left">&copy; {{ date('Y') }}
+                {{ $settings['site_title'] ?? 'Showroom' }}. All rights
+                reserved.</p>
+        </div>
+    </div>
+</footer>

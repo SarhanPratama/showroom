@@ -19,6 +19,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Paginator::useTailwind(); // Optional if you use Tailwind for pagination
+        view()->composer('*', function ($view) {
+            if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+                $settings = \App\Models\Setting::pluck('value', 'key')->all();
+                $view->with('settings', $settings);
+            }
+        });
     }
 }

@@ -29,6 +29,38 @@
             animation: fadeInUp 0.5s ease-out both;
         }
 
+        @keyframes imgZoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes imgZoomOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+
+        .animate-zoom-in {
+            animation: imgZoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .animate-zoom-out {
+            animation: imgZoomOut 0.2s ease-in forwards;
+        }
+
         /* Fix for dark mode calendar icon visibility */
         .theme-dark ::-webkit-calendar-picker-indicator,
         .dark ::-webkit-calendar-picker-indicator {
@@ -148,6 +180,42 @@
             </main>
         </div>
     </div>
+
+    <!-- Global Image Modal (Alpine.js) -->
+    <div x-data="{ imgModal: false, imgModalSrc: '' }"
+        x-on:open-img-modal.window="imgModal = true; imgModalSrc = $event.detail.src">
+        <template x-if="imgModal">
+            <div class="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-80"
+                x-show="imgModal" x-transition.opacity.duration.300ms @click="imgModal = false"
+                @keydown.escape.window="imgModal = false">
+                <div class="relative max-w-5xl mx-auto p-4" @click.stop>
+                    <button @click="imgModal = false"
+                        class="absolute top-0 right-0 p-2 text-white bg-red-600 rounded-full hover:bg-red-700 focus:outline-none -mt-4 -mr-4 shadow-lg flex items-center justify-center w-10 h-10"
+                        style="z-index: 60;" title="Tutup">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <!-- Download Button -->
+                    <a :href="imgModalSrc" download="gambar_showroom.jpg"
+                        class="absolute top-0 right-12 p-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none -mt-4 mr-2 shadow-lg flex items-center justify-center w-10 h-10"
+                        style="z-index: 60;" title="Download Gambar">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                    </a>
+                    <!-- The Image -->
+                    <img :src="imgModalSrc" x-show="imgModal" x-transition:enter="animate-zoom-in"
+                        x-transition:leave="animate-zoom-out"
+                        class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl relative"
+                        style="z-index: 50;" />
+                </div>
+            </div>
+        </template>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     @stack('scripts')
