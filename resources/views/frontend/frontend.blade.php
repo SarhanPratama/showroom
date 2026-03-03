@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Hero Section Slider -->
-    <section id="home" class="relative w-full h-[85vh] overflow-hidden bg-slate-900">
+    <section id="home" class="relative group w-full h-[85vh] overflow-hidden bg-slate-900">
         <!-- Slider Container -->
         <div id="slider-container" class="flex h-full transition-transform duration-700 ease-in-out">
 
@@ -11,7 +11,7 @@
                 <div class="slide min-w-full h-full relative bg-cover bg-center"
                     style="background-image: url('{{ str_starts_with($slider->image, 'http') ? $slider->image : Storage::url($slider->image) }}');">
                     <div class="absolute inset-0 bg-slate-900/70 flex items-center">
-                        <div class="container mx-auto px-6 text-white">
+                        <div class="container mx-auto px-16 md:px-24 text-white">
                             <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
                                 @if($slider->badge_text)
                                     <span
@@ -59,11 +59,11 @@
         @if($sliders->count() > 1)
             <!-- Navigation Buttons -->
             <button id="prevBtn"
-                class="absolute top-1/2 left-4 md:left-8 transform -translate-y-1/2 bg-slate-900/40 hover:bg-blue-600 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] z-30">
+                class="absolute top-1/2 left-2 md:left-8 transform -translate-y-1/2 bg-slate-900/40 hover:bg-blue-600 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] z-30 opacity-0 group-hover:opacity-100">
                 <i class="fas fa-chevron-left text-xl"></i>
             </button>
             <button id="nextBtn"
-                class="absolute top-1/2 right-4 md:right-8 transform -translate-y-1/2 bg-slate-900/40 hover:bg-blue-600 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] z-30">
+                class="absolute top-1/2 right-2 md:right-8 transform -translate-y-1/2 bg-slate-900/40 hover:bg-blue-600 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300 border border-white/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] z-30 opacity-0 group-hover:opacity-100">
                 <i class="fas fa-chevron-right text-xl"></i>
             </button>
         @endif
