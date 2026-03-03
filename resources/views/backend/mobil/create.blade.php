@@ -18,13 +18,21 @@
                         placeholder="Contoh: Toyota Avanza" required />
                 </label>
 
-                <!-- Gambar Mobil -->
+                <!-- Gambar Utama Mobil -->
                 <label class="block mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Gambar/Foto Mobil</span>
+                    <span class="text-gray-700 dark:text-gray-400">Gambar/Foto Utama Mobil</span>
                     <input type="file" name="image" accept="image/*"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input"
                         required />
                     <span class="text-xs text-gray-500">Format: JPG, PNG, WEBP. Maks 2MB.</span>
+                </label>
+
+                <!-- Galeri Gambar Tambahan -->
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Galeri Gambar Tambahan (Opsional)</span>
+                    <input type="file" name="gallery[]" accept="image/*" multiple
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
+                    <span class="text-xs text-gray-500">Bisa pilih lebih dari satu gambar.</span>
                 </label>
 
                 <!-- Harga -->

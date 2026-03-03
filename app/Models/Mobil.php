@@ -43,4 +43,9 @@ class Mobil extends Model
     {
         return $this->hasMany(DetailPesanan::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(MobilImage::class);
+    }
 }

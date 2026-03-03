@@ -32,11 +32,20 @@
 
                 <!-- Upload Gambar Baru -->
                 <label class="block mt-4 text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Ganti Gambar Mobil (Opsional)</span>
+                    <span class="text-gray-700 dark:text-gray-400">Ganti Gambar Utama (Opsional)</span>
                     <input type="file" name="image" accept="image/*"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
                     <span class="text-xs text-gray-500">Abaikan jika tidak ingin mengganti gambar. Format: JPG, PNG,
                         WEBP.</span>
+                </label>
+
+                <!-- Upload Galeri Gambar Tambahan -->
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Tambah Galeri Gambar (Opsional)</span>
+                    <input type="file" name="gallery[]" accept="image/*" multiple
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-200 dark:focus:shadow-outline-gray form-input" />
+                    <span class="text-xs text-gray-500">Bisa pilih lebih dari satu gambar untuk ditambahkan ke
+                        galeri.</span>
                 </label>
 
                 <!-- Harga -->
@@ -108,5 +117,29 @@
                 </div>
             </form>
         </div>
+
+        @if($mobil->images && $mobil->images->count() > 0)
+            <h3 class="mt-4 mb-2 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                Kelola Galeri Gambar
+            </h3>
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <div class="flex flex-wrap gap-6">
+                    @foreach($mobil->images as $img)
+                        <div class="relative w-32 h-24">
+                            <img src="{{ Storage::url($img->image) }}" class="w-full h-full object-cover rounded-lg border">
+                            <form action="{{ route('admin.mobil.destroyImage', $img->id) }}" method="POST"
+                                class="absolute -top-2 -right-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Hapus gambar ini?')"
+                                    class="bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shadow-lg hover:bg-red-700 focus:outline-none">
+                                    &times;
+                                </button>
+                            </form>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

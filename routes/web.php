@@ -29,6 +29,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Master Data
+    Route::delete('admin/mobil/image/{id}', [MobilController::class, 'destroyImage'])->name('admin.mobil.destroyImage');
     Route::resource('admin/mobil', MobilController::class);
     Route::resource('admin/merek', MerekController::class);
     Route::resource('admin/tipe', TipeMobilController::class);

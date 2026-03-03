@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mobil;
+use App\Models\MobilImage;
 use App\Models\Merek;
 use App\Models\TipeMobil;
 use App\Models\InventoryMobil;
@@ -67,6 +68,17 @@ class MobilController extends Controller
             'status_ready' => $mobil->stok > 0,
         ]);
 
+        // Handle Gallery Images
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $galleryPath = $file->store('mobils/gallery', 'public');
+                MobilImage::create([
+                    'mobil_id' => $mobil->id,
+                    'image' => $galleryPath,
+                ]);
+            }
+        }
+
         return redirect()->route('mobil.index')->with('success', 'Data mobil berhasil ditambahkan');
     }
 
@@ -83,7 +95,7 @@ class MobilController extends Controller
      */
     public function edit(string $id)
     {
-        $mobil = Mobil::findOrFail($id);
+        $mobil = Mobil::with('images')->findOrFail($id);
         $mereks = Merek::all();
         $tipes = TipeMobil::all();
         return view('backend.mobil.edit', compact('mobil', 'mereks', 'tipes'));
@@ -125,6 +137,17 @@ class MobilController extends Controller
             'image' => $imagePath,
         ]);
 
+        // Handle Gallery Images
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $galleryPath = $file->store('mobils/gallery', 'public');
+                MobilImage::create([
+                    'mobil_id' => $mobil->id,
+                    'image' => $galleryPath,
+                ]);
+            }
+        }
+
         // Update Inventory
         $inventory = InventoryMobil::where('mobil_id', $mobil->id)->first();
         if ($inventory) {
@@ -149,8 +172,26 @@ class MobilController extends Controller
     public function destroy(string $id)
     {
         $mobil = Mobil::findOrFail($id);
+        if ($mobil->image && !str_starts_with($mobil->image, 'http')) {
+            Storage::disk('public')->delete($mobil->image);
+        }
+        foreach ($mobil->images as $galleryImg) {
+            Storage::disk('public')->delete($galleryImg->image);
+        }
         $mobil->delete();
-
         return redirect()->route('mobil.index')->with('success', 'Data mobil berhasil dihapus');
+    }
+
+    /**
+     * Remove the specified gallery image.
+     */
+    public function destroyImage(string $id)
+    {
+        $image = MobilImage::findOrFail($id);
+        if ($image->image && !str_starts_with($image->image, 'http')) {
+            Storage::disk('public')->delete($image->image);
+        }
+        $image->delete();
+        return back()->with('success', 'Gambar galeri berhasil dihapus');
     }
 }

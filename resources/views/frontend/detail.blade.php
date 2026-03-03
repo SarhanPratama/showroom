@@ -27,9 +27,19 @@
                         <img id="mainImage" src="{{ $imageUrl }}" alt="{{ $mobil->merek->nama_merek }} {{ $mobil->nama_mobil }}"
                             class="w-full h-auto object-cover rounded-xl shadow-lg mb-4">
 
-                        <div id="thumbnailContainer" class="flex gap-4 overflow-x-auto">
-                            <img src="{{ $imageUrl }}"
-                                class="rounded-lg cursor-pointer transition transform hover:scale-105 border-2 border-purple-600 w-32 h-24 object-cover shrink-0">
+                        <div id="thumbnailContainer" class="flex gap-4 overflow-x-auto mt-4 pb-2">
+                            <!-- Main Image Thumbnail -->
+                            <img src="{{ $imageUrl }}" onclick="changeMainImage(this, '{{ $imageUrl }}')"
+                                class="thumbnail-item rounded-lg cursor-pointer transition transform hover:scale-105 border-2 border-purple-600 w-24 h-24 object-cover shrink-0">
+
+                            <!-- Additional Gallery Images -->
+                            @if($mobil->images)
+                                @foreach($mobil->images as $galleryImg)
+                                    @php $galUrl = Storage::url($galleryImg->image); @endphp
+                                    <img src="{{ $galUrl }}" onclick="changeMainImage(this, '{{ $galUrl }}')"
+                                        class="thumbnail-item rounded-lg cursor-pointer transition transform hover:scale-105 border-2 border-transparent hover:border-purple-400 w-24 h-24 object-cover shrink-0">
+                                @endforeach
+                            @endif
                         </div>
                     @else
                         <div
@@ -304,6 +314,22 @@
 
             // Initial calculation
             hitungKredit();
+            // Thumbnail image switching logic
+            window.changeMainImage = function (element, newSrc) {
+                // Change main image source
+                document.getElementById('mainImage').src = newSrc;
+
+                // Reset all thumbnails borders
+                const thumbnails = document.querySelectorAll('.thumbnail-item');
+                thumbnails.forEach(thumb => {
+                    thumb.classList.remove('border-purple-600');
+                    thumb.classList.add('border-transparent');
+                });
+
+                // Add active border to current thumbnail
+                element.classList.remove('border-transparent');
+                element.classList.add('border-purple-600');
+            }
         });
     </script>
 @endpush
